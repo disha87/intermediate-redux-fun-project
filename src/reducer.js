@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { LOGIN, SEND_MESSAGE, RECEIVED_MESSAGE } from './actions';
 
 let initialState = {
-    status: "LOGGED_OUT"
+    status: "LOGGED_OUT",
     nickname: "admin",
     message: "hello"
 };
