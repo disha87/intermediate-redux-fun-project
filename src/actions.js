@@ -2,26 +2,26 @@ export const LOGIN = 'LOGIN';
 export const SEND_MESSAGE = 'SEND_MESSAGE';
 export const RECEIVED_MESSAGE = 'RECEIVED_MESSAGE';
 
-export const userLogin = (nickname, status) => {
+export const userLogin = (name, status) => {
     return {
         type: LOGIN,
-        status,
-        nickname
+        name,
+        status
     }
 };
 
-export const sendMsg = (nickname, message) => {
+export const sendMsg = (name, message) => {
     return {
         type: SEND_MESSAGE,
-        nickname,
+        name,
         message
     }
 };
 
-export const receivedMsg = (nickname, message) => {
+export const receivedMsg = (name, message) => {
     return {
         type: RECEIVED_MESSAGE,
-        nickname,
+        name,
         message
     }
 };

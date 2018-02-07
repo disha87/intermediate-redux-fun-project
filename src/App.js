@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-
-import { login, hear, join, say } from './chat'
+import { connect } from 'react-redux';
+import { login, hear, join, say } from './chat';
+import { userLogin, sendMsg, receivedMsg } from './actions';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { name: '', message: '' };
+    this.state = { name: '', message: '', status: "LOGGED_OUT"};
     this.handleChange = this.handleChange.bind(this);
     this.handleMessageChange = this.handleMessageChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -15,20 +16,25 @@ class App extends Component {
   }
 
   handleClick() {
-    login(this.state.name, this.state.name)
-      .then(({ connection, user }) => {
-        join(connection)
-          .then(channel =>
-            this.channel = channel
-          )
-        hear(connection, (channel, message) => {
-          console.log(message, channel)
-        })
-      })
+    this.setState({ status: "LOGGED_IN" });
+    this.props.userLogin(this.state.name, this.state.status);
+    console.log(`name: ${this.state.name}, status: ${this.state.status}`);
+    // login(this.state.name, this.state.name)
+    //   .then(({ connection, user }) => {
+    //     join(connection)
+    //       .then(channel =>
+    //         this.channel = channel
+    //       )
+    //     hear(connection, (channel, message) => {
+    //       console.log(message, channel)
+    //     })
+    //   })
   }
 
   handleSend() {
-    say(this.channel, this.state.message)
+      console.log(`name: ${this.state.name}, message: ${this.state.message}`);
+      this.props.sendMsg(this.state.name, this.state.message);
+    //say(this.channel, this.state.message)
   }
 
   handleChange(event) {
@@ -46,6 +52,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to Star Wars Chat</h1>
         </header>
         <p>
+          <label htmlFor="status">{this.state.status} </label>
           <label htmlFor="nickname">nickname </label>
           <input id="nickname" value={this.state.name} onChange={this.handleChange} type="text" />
           <button onClick={this.handleClick}>login</button>
@@ -60,4 +67,9 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(state => state, {
+    userLogin,
+    sendMsg,
+    receivedMsg
+})(App);
+
