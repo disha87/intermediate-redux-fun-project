@@ -2,20 +2,27 @@ import { combineReducers } from 'redux';
 import { LOGIN, SEND_MESSAGE, RECEIVED_MESSAGE } from './actions';
 
 let initialState = {
-    user: "admin",
+    status: "LOGGED_OUT"
+    nickname: "admin",
     message: "hello"
 };
 
 const reducer = (state=initialState, action) => {
-    switch (action) {
+    switch (action.type) {
       case LOGIN: {
-          return;
+          return {
+             ...state, status: "LOGGED_IN", nickname: action.nickname
+          };
       }
       case SEND_MESSAGE: {
-          return;
+          return {
+             ...state, nickname: action.nickname, message: action.message
+          };
       }
       case RECEIVED_MESSAGE: {
-          return;
+          return {
+             ...state, nickname: action.nickname, message: action.message
+          };
       }
       default:
         return state;
