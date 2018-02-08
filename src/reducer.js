@@ -35,7 +35,7 @@ const chatReducer = (state=initialState, action) => {
             msgs.push({
                 "sender": action.name,
                 "message": action.message,
-                "timestamp": "7364"
+                "timestamp": action.timestamp
             });
 
             return {
@@ -43,8 +43,14 @@ const chatReducer = (state=initialState, action) => {
             };
         }
         case RECEIVED_MESSAGE: {
+            const msgs =  [...state.messages];
+            msgs.push({
+                "sender": action.name,
+                "message": action.message,
+                "timestamp": action.timestamp
+            });
             return {
-               ...state, name: action.name, message: action.message
+               ...state, name: action.name, message: action.message, messages: msgs
             };
         }
         default:

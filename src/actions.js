@@ -23,11 +23,12 @@ export const loginFailed = (name, status) => {
     }
 };
 
-export const sendMsg = (name, message) => {
+export const sendMsg = (name, message, timestamp) => {
     return {
         type: SEND_MESSAGE,
         name,
-        message
+        message,
+        timestamp
     }
 };
 
@@ -45,11 +46,12 @@ export const messageChanged = (message) => {
     }
 };
 
-export const receivedMsg = (name, message) => {
+export const receivedMsg = (name, message, timestamp) => {
     return {
         type: RECEIVED_MESSAGE,
         name,
-        message
+        message,
+        timestamp
     }
 };
 
@@ -61,11 +63,12 @@ export const doLogin = (name, status) => {
           .then(channel =>
             {   
               _channel = channel;
-              dispatch(userLogin(name, status, channel));
+              dispatch(userLogin(name, status));
             }
           )
         hear(connection, (channel, message) => {
-          console.log(message, channel)
+            dispatch(receivedMsg(message._sender.nickname, message.message, Date.now()));
+            console.log(message, channel)
         })
       })
   }
@@ -77,6 +80,6 @@ export const doSend = (name, message) => {
   }
   return dispatch => {
       say(_channel, message);
-      dispatch(sendMsg(name, message));
+      dispatch(sendMsg(name, message, Date.now()));
   }
 }
