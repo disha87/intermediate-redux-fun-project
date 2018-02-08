@@ -50,7 +50,7 @@ const chatReducer = (state=initialState, action) => {
                 "timestamp": action.timestamp
             });
             return {
-               ...state, name: action.name, message: action.message, messages: msgs
+               ...state, messages: msgs
             };
         }
         default:
