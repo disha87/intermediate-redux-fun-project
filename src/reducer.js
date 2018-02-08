@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { LOGIN, SEND_MESSAGE, RECEIVED_MESSAGE } from './actions';
+import { LOGIN, LOGIN_FAILED, USER_NAME_CHANGED, MESSAGE_CHANGED, SEND_MESSAGE, RECEIVED_MESSAGE } from './actions';
 
 let initialState = {
     status: "LOGGED_OUT",
@@ -7,11 +7,26 @@ let initialState = {
     message: "hello"
 };
 
-const reducer = (state=initialState, action) => {
+const chatReducer = (state=initialState, action) => {
     switch (action.type) {
         case LOGIN: {
             return {
                ...state, status: "LOGGED_IN", name: action.name
+            };
+        }
+        case USER_NAME_CHANGED: {
+            return {
+               ...state, name: action.name
+            };
+        }
+        case MESSAGE_CHANGED: {
+            return {
+               ...state, name: action.message
+            };
+        }
+        case LOGIN_FAILED: {
+            return {
+               ...state, status: "LOGIN_FAILED", name: action.name
             };
         }
         case SEND_MESSAGE: {
@@ -29,6 +44,4 @@ const reducer = (state=initialState, action) => {
       }
 };
 
-export const chatReducer = combineReducers({
-    reducer
-});
+export default chatReducer;

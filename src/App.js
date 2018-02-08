@@ -3,12 +3,11 @@ import logo from './logo.svg';
 import './App.css';
 import { connect } from 'react-redux';
 import { login, hear, join, say } from './chat';
-import { userLogin, sendMsg, receivedMsg } from './actions';
+import { doLogin, userNameChanged, doSend, messageChanged, userLogin, sendMsg, receivedMsg } from './actions';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { name: '', message: '', status: "LOGGED_OUT"};
     this.handleChange = this.handleChange.bind(this);
     this.handleMessageChange = this.handleMessageChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -16,32 +15,21 @@ class App extends Component {
   }
 
   handleClick() {
-    this.setState({ status: "LOGGED_IN" });
-    this.props.userLogin(this.state.name, this.state.status);
-    console.log(`name: ${this.state.name}, status: ${this.state.status}`);
-    // login(this.state.name, this.state.name)
-    //   .then(({ connection, user }) => {
-    //     join(connection)
-    //       .then(channel =>
-    //         this.channel = channel
-    //       )
-    //     hear(connection, (channel, message) => {
-    //       console.log(message, channel)
-    //     })
-    //   })
+      console.log(`name: ${this.props.name}, status: ${this.props.status}`);
+      this.props.doLogin(this.props.name, this.props.status);
   }
 
   handleSend() {
-      console.log(`name: ${this.state.name}, message: ${this.state.message}`);
-      this.props.sendMsg(this.state.name, this.state.message);
-    //say(this.channel, this.state.message)
+      console.log(`name: ${this.props.name}, message: ${this.props.message}`);
+      this.props.doSend(this.props.message);
   }
 
   handleChange(event) {
-    this.setState({ name: event.target.value });
+      this.props.userNameChanged(event.target.value);
   }
+
   handleMessageChange(event) {
-    this.setState({ message: event.target.value });
+      this.props.messageChanged(event.target.value);
   }
 
   render() {
@@ -52,14 +40,14 @@ class App extends Component {
           <h1 className="App-title">Welcome to Star Wars Chat</h1>
         </header>
         <p>
-          <label htmlFor="status">{this.state.status} </label>
+          <label htmlFor="status">{this.props.status} </label>
           <label htmlFor="nickname">nickname </label>
-          <input id="nickname" value={this.state.name} onChange={this.handleChange} type="text" />
+          <input id="nickname" value={this.props.name} onChange={this.handleChange} type="text" />
           <button onClick={this.handleClick}>login</button>
         </p>
         <p>
           <label htmlFor="message">message </label>
-          <input id="message" value={this.state.message} onChange={this.handleMessageChange} type="text"></input>
+          <input id="message" value={this.props.message} onChange={this.handleMessageChange} type="text"></input>
           <button onClick={this.handleSend}>send</button>
         </p>
       </div>
@@ -67,10 +55,6 @@ class App extends Component {
   }
 }
 
-export default connect(state => state, {
-    userLogin,
-    sendMsg,
-    receivedMsg
-})(App);
+export default connect(state => state, { userNameChanged, doLogin, messageChanged, doSend })(App);
 
 
