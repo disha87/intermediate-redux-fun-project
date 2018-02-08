@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import logo from '../assets/logo.svg';
+import '../css/App.css';
 import { connect } from 'react-redux';
-import { login, hear, join, say } from './chat';
-import { doLogin, userNameChanged, doSend, messageChanged, userLogin, sendMsg, receivedMsg } from './actions';
+import { login, hear, join, say } from '../chat';
+import { doLogin, userNameChanged, doSend, messageChanged, userLogin, sendMsg, receivedMsg } from '../actions';
+import Messages from './Messages';
 
 class App extends Component {
   constructor(props) {
@@ -21,15 +22,18 @@ class App extends Component {
 
   handleSend() {
       console.log(`name: ${this.props.name}, message: ${this.props.message}`);
-      this.props.doSend(this.props.message);
+      console.dir(`messages: ${this.props.messages}`);
+      this.props.doSend(this.props.name, this.props.message);
   }
 
   handleChange(event) {
       this.props.userNameChanged(event.target.value);
+      event.preventDefault();
   }
 
-  handleMessageChange(event) {
-      this.props.messageChanged(event.target.value);
+  handleMessageChange(event1) {
+      this.props.messageChanged(event1.target.value);
+      event1.preventDefault();
   }
 
   render() {
@@ -50,6 +54,7 @@ class App extends Component {
           <input id="message" value={this.props.message} onChange={this.handleMessageChange} type="text"></input>
           <button onClick={this.handleSend}>send</button>
         </p>
+        <Messages messages={this.props.messages}/>
       </div>
     );
   }

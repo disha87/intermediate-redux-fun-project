@@ -9,12 +9,11 @@ export const MESSAGE_CHANGED = 'MESSAGE_CHANGED';
 export const RECEIVED_MESSAGE = 'RECEIVED_MESSAGE';
 let _channel;
 
-export const userLogin = (name, status, channel) => {
+export const userLogin = (name, status) => {
     return {
         type: LOGIN,
         name,
-        status,
-        channel
+        status
     }
 };
 
@@ -72,11 +71,12 @@ export const doLogin = (name, status) => {
   }
 };
 
-export const doSend = (message) => {
+export const doSend = (name, message) => {
   if (!_channel) {
       console.error("login to send message");
   }
   return dispatch => {
       say(_channel, message);
+      dispatch(sendMsg(name, message));
   }
 }

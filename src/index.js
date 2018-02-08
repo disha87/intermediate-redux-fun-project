@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './css/index.css';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import chatReducer from './reducer';
-import App from './App';
+import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 import thunk from 'redux-thunk';
 

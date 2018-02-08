@@ -4,7 +4,8 @@ import { LOGIN, LOGIN_FAILED, USER_NAME_CHANGED, MESSAGE_CHANGED, SEND_MESSAGE, 
 let initialState = {
     status: "LOGGED_OUT",
     name: "admin",
-    message: "hello"
+    message: "hello",
+    messages:[]
 };
 
 const chatReducer = (state=initialState, action) => {
@@ -21,7 +22,7 @@ const chatReducer = (state=initialState, action) => {
         }
         case MESSAGE_CHANGED: {
             return {
-               ...state, name: action.message
+               ...state, message: action.message
             };
         }
         case LOGIN_FAILED: {
@@ -30,8 +31,15 @@ const chatReducer = (state=initialState, action) => {
             };
         }
         case SEND_MESSAGE: {
+            const msgs =  [...state.messages];
+            msgs.push({
+                "sender": action.name,
+                "message": action.message,
+                "timestamp": "7364"
+            });
+
             return {
-               ...state, name: action.name, message: action.message
+               ...state, name: action.name, message: action.message, messages: msgs
             };
         }
         case RECEIVED_MESSAGE: {
