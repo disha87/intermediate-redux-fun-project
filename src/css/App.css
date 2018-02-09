@@ -21,6 +21,20 @@
 .App-intro {
   font-size: large;
 }
+.msgList {
+    margin-left: 37%;
+}
+.msgContainer {
+    text-align: left;
+    margin-top: 20px;
+}
+.timestamp {
+    margin-right: 37%;
+    float: right;
+}
+
+.msgList{
+}
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }

@@ -6,7 +6,7 @@ const Messages = ({messages}) => {
         return (<Message key={index} sender={msgObj.sender} message={msgObj.message} timestamp={msgObj.timestamp} />)
     });
     return (
-        <div>{msgList}</div>
+        <div className="msgList">{msgList}</div>
     );
 }
 
